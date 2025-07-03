@@ -8,7 +8,7 @@ let callIndex   = -1;   // for useState hook order
 
 /* ---------- bootstrap ---------- */
 export function initState(initialState) {
-  state = { ...initialState };
+  state = { ...initialState, hooks: [] };
 }
 
 /* ---------- basic getters / setters ---------- */
@@ -17,7 +17,7 @@ export function getState() {
 }
 
 export function setState(newState) {
-  state = { ...state, ...newState };
+  state = { ...state, ...newState, hooks: state.hooks || [] };
 
   /* ensure hooks array exists */
   if (!Array.isArray(state.hooks)) state.hooks = [];

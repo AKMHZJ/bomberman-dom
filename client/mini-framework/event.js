@@ -5,6 +5,7 @@ const handlers = new Map();
 /* attach a single delegated listener to the root container */
 function attachListener(root, eventType) {
   root.addEventListener(eventType, (event) => {
+    console.log(`Event ${eventType} triggered on`, event.target);
     const target = findRegisteredElement(event.target, eventType);
     if (target) {
       handlers.get(target).get(eventType)(event);
