@@ -28,8 +28,12 @@ function joinGame(nickname, setScreen) {
 
 function App() {
   resetHookIndex();
-  const [state, setState] = useState({ screen: 'nickname', playerCount: 0, timer: null, nickname: '' });
+  // const [state, setState] = useState({ screen: 'nickname', playerCount: 0, timer: null, nickname: '' });
+  // console.log('Hook index:', callIndex, 'State from useState:', state);
   // console.log('Rendering App with state:', state);
+  const state = getState();
+  const setAppState = setState;
+
 
   if (state.screen === 'nickname') {
     return makeElement('div', { id: 'nickname-screen' }, [
@@ -39,12 +43,12 @@ function App() {
         placeholder: 'Enter nickname',
         value: state.nickname,
         oninput: (e) => {
-          setState({ ...state, nickname: e.target.value });
+          setAppState({ ...state, nickname: e.target.value });
           console.log('Nickname input:', e.target.value);
         }
       }),
       makeElement('button', {
-        onclick: () => joinGame(state.nickname, (screen) => setState({ ...state, screen }))
+        onclick: () => joinGame(state.nickname, (screen) => setAppState({ ...state, screen }))
       }, ['Join Game'])
     ]);
   }
@@ -84,10 +88,14 @@ function renderLoop() {
 }
 
 ws.onmessage = (event) => {
+  console.log("hello");
+  
   const data = JSON.parse(event.data);
   console.log('Client received:', data);
   if (data.type === 'playerCount') {
     console.log('Updating player count to:', data.count);
+    console.log("la dinde",setState({ ...getState(), playerCount: data.count }));
+    
     setState({ ...getState(), playerCount: data.count });
   }
   if (data.type === 'timer') {
