@@ -50,4 +50,8 @@ function isNearCorner(x, y) {
          (x >= MAP_SIZE - 2 && y >= MAP_SIZE - 2);
 }
 
-module.exports = { generateMap, MAP_SIZE };
+function isValidMove(x, y, map){
+  return x >= 0 && x < MAP_SIZE && y >= 0 && y < MAP_SIZE && map[y][x] != 'wall' && map[y][x] != 'block'
+}
+
+module.exports = { generateMap, MAP_SIZE, isValidMove };

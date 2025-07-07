@@ -22,3 +22,8 @@
 #chat-input {
   width: 100%;
 }
+.wall { background: gray; }
+.block { background: brown; }
+.empty { background: transparent; }
+.player { background: green; text-align: center; color: white; }
+.bomb { background: red; }
